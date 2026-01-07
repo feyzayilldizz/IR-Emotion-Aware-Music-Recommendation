@@ -10,6 +10,7 @@ from nltk.stem import WordNetLemmatizer
 # nltk.download('wordnet')
 # nltk.download('omw-1.4')
 
+
 def get_stopwords():
     """Return the English stopwords, download if missing"""
     try:
@@ -21,14 +22,25 @@ def get_stopwords():
     sw -= {'not', 'never', 'no'}
     return sw
 
-# STOPWORDS variable now uses lazy loading safely
+def ensure_wordnet():
+    try:
+        nltk.data.find("corpora/wordnet")
+    except LookupError:
+        nltk.download("wordnet")
+
+def ensure_punkt():
+    try:
+        nltk.data.find("tokenizers/punkt")
+    except LookupError:
+        nltk.download("punkt")
+
+
 STOPWORDS = get_stopwords()
-
-
 lemmatizer = WordNetLemmatizer()
 
 def preprocess_text(text: str) -> list[str]:
   # Preprocess lyrics and query, returns a tokens list
+  ensure_punkt()
 
   if not isinstance(text, str):
     return []
