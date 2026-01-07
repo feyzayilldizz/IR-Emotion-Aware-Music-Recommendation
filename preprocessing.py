@@ -4,11 +4,11 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 #nltk.data.path.append('/Users/feyzayildiz/nltk_data')
-# nltk.download('punkt')
-# nltk.download('punkt_tab')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
 
 
 def get_stopwords():
