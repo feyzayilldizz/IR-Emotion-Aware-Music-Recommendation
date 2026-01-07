@@ -8,18 +8,7 @@ from emotion import load_nrc_lexicon, emotion_vector, emotion_trigger_words
 from retrieval import SemanticEmotionRetrieval
 from sentence_transformers import SentenceTransformer
 import streamlit as st
-
-@st.cache_resource
-def download_nltk():
-    import nltk
-    for pkg in ["punkt", "stopwords", "wordnet", "omw-1.4"]:
-        try:
-            nltk.data.find(f"corpora/{pkg}")
-        except LookupError:
-            nltk.download(pkg)
-    return True
-
-download_nltk()
+import nltk_setup
 
 
 # Load precomputed data
