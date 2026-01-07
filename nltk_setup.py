@@ -2,18 +2,15 @@
 import nltk
 
 def download_nltk_resources():
-    packages = ["punkt", "stopwords", "wordnet", "omw-1.4"]
-    for pkg in packages:
+    resources = [
+        ("tokenizers/punkt", "punkt"),
+        ("tokenizers/punkt_tab/english", "punkt"),  # ensures punkt_tab exists
+        ("corpora/stopwords", "stopwords"),
+        ("corpora/wordnet", "wordnet"),
+        ("corpora/omw-1.4", "omw-1.4"),
+    ]
+    for path, pkg in resources:
         try:
-            # Try to find resource
-            if pkg == "punkt":
-                nltk.data.find("tokenizers/punkt")
-            elif pkg == "stopwords":
-                nltk.data.find("corpora/stopwords")
-            elif pkg == "wordnet":
-                nltk.data.find("corpora/wordnet")
-            elif pkg == "omw-1.4":
-                nltk.data.find("corpora/omw-1.4")
+            nltk.data.find(path)
         except LookupError:
             nltk.download(pkg)
-
