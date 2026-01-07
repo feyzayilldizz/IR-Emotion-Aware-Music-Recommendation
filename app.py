@@ -7,30 +7,20 @@ from preprocessing import preprocess_text
 from emotion import load_nrc_lexicon, emotion_vector, emotion_trigger_words
 from retrieval import SemanticEmotionRetrieval
 from sentence_transformers import SentenceTransformer
-import nltk
+import streamlit as st
 
-import ssl
+@st.cache_resource
+def download_nltk():
+    import nltk
+    for pkg in ["punkt", "stopwords", "wordnet", "omw-1.4"]:
+        try:
+            nltk.data.find(f"corpora/{pkg}")
+        except LookupError:
+            nltk.download(pkg)
+    return True
 
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    pass
-else:
-    ssl._create_default_https_context = _create_unverified_https_context
+download_nltk()
 
-
-NLTK_PACKAGES = [
-    "punkt",
-    "stopwords",
-    "wordnet",
-    "omw-1.4"
-]
-
-for pkg in NLTK_PACKAGES:
-    try:
-        nltk.data.find(pkg)
-    except LookupError:
-        nltk.download(pkg)
 
 # Load precomputed data
 @st.cache_data
