@@ -7,9 +7,6 @@ from preprocessing import preprocess_text
 from emotion import load_nrc_lexicon, emotion_vector, emotion_trigger_words
 from retrieval import SemanticEmotionRetrieval
 from sentence_transformers import SentenceTransformer
-import streamlit as st
-import nltk_setup
-
 
 # Load precomputed data
 @st.cache_data
