@@ -18,7 +18,7 @@ def get_stopwords():
     except LookupError:
         nltk.download("stopwords")
         sw = set(stopwords.words("english"))
-    # Remove negations if needed
+    
     sw -= {'not', 'never', 'no'}
     return sw
 
@@ -29,8 +29,14 @@ def ensure_wordnet():
         nltk.download("wordnet")
 
 def ensure_punkt():
+    # Standard punkt tokenizer
     try:
         nltk.data.find("tokenizers/punkt")
+    except LookupError:
+        nltk.download("punkt")
+    
+    try:
+        nltk.data.find("tokenizers/punkt_tab/english")
     except LookupError:
         nltk.download("punkt")
 
@@ -41,13 +47,14 @@ lemmatizer = WordNetLemmatizer()
 def preprocess_text(text: str) -> list[str]:
   # Preprocess lyrics and query, returns a tokens list
   ensure_punkt()
-
+  ensure_wordnet() 
+  tokens = nltk.word_tokenize(text)
   if not isinstance(text, str):
     return []
 
   text = text.lower()
   text = re.sub(r"[^a-z\s]", " ", text)
-  tokens = nltk.word_tokenize(text)
+  
 
   tokens = [
         lemmatizer.lemmatize(t)
