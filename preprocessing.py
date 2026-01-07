@@ -10,8 +10,20 @@ from nltk.stem import WordNetLemmatizer
 # nltk.download('wordnet')
 # nltk.download('omw-1.4')
 
-STOPWORDS = set(stopwords.words('english'))
-STOPWORDS -= {'not', 'never', 'no'}
+def get_stopwords():
+    """Return the English stopwords, download if missing"""
+    try:
+        sw = set(stopwords.words("english"))
+    except LookupError:
+        nltk.download("stopwords")
+        sw = set(stopwords.words("english"))
+    # Remove negations if needed
+    sw -= {'not', 'never', 'no'}
+    return sw
+
+# STOPWORDS variable now uses lazy loading safely
+STOPWORDS = get_stopwords()
+
 
 lemmatizer = WordNetLemmatizer()
 
